@@ -1,4 +1,7 @@
 # machinelearningJ
 previous-reference
-https://github.com/jmp448/cs675/blob/master/
-https://github.com/achung19/cs475/blob/master/
+https://github.com/jmp448/cs675/blob/master/ \\
+https://github.com/achung19/cs475/blob/master/ \\
+
+edit on overleaf
+https://www.overleaf.com/
