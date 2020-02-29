@@ -1,0 +1,459 @@
+\documentclass[11pt]{article}
+% https://www.gradescope.com/help#help-center-item-answer-formatting-guide
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{color}
+\usepackage{marvosym}
+\usepackage{enumerate}
+\usepackage{subfigure}
+\usepackage{tikz}
+\usepackage[fleqn]{amsmath}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage[many]{tcolorbox}
+\usepackage{lipsum}
+\usepackage{float}
+\usepackage{trimclip}
+\usepackage{listings}
+\usepackage{environ}% http://ctan.org/pkg/environ
+\usepackage{wasysym}
+\usepackage{array}
+\usepackage{bbm}
+
+\oddsidemargin 0mm
+\evensidemargin 5mm
+\topmargin -20mm
+\textheight 240mm
+\textwidth 160mm
+
+\newcommand{\vwi}{{\bf w}_i}
+\newcommand{\vw}{{\bf w}}
+\newcommand{\vx}{{\bf x}}
+\newcommand{\vy}{{\bf y}}
+\newcommand{\vxi}{{\bf x}_i}
+\newcommand{\yi}{y_i}
+\newcommand{\vxj}{{\bf x}_j}
+\newcommand{\vxn}{{\bf x}_n}
+\newcommand{\yj}{y_j}
+\newcommand{\ai}{\alpha_i}
+\newcommand{\aj}{\alpha_j}
+\newcommand{\X}{{\bf X}}
+\newcommand{\Y}{{\bf Y}}
+\newcommand{\vz}{{\bf z}}
+\newcommand{\msigma}{{\bf \Sigma}}
+\newcommand{\vmu}{{\bf \mu}}
+\newcommand{\vmuk}{{\bf \mu}_k}
+\newcommand{\msigmak}{{\bf \Sigma}_k}
+\newcommand{\vmuj}{{\bf \mu}_j}
+\newcommand{\msigmaj}{{\bf \Sigma}_j}
+\newcommand{\pij}{\pi_j}
+\newcommand{\pik}{\pi_k}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\el}{\mathcal{L}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\vxij}{{\bf x}_{ij}}
+\newcommand{\vt}{{\bf t}}
+\newcommand{\yh}{\hat{y}}
+\newcommand{\code}[1]{{\footnotesize \tt #1}}
+\newcommand{\alphai}{\alpha_i}
+\newcommand{\defeq}{\overset{\text{def}}{=}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+
+
+\bgroup
+\def\arraystretch{1.5}
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{z}[1]{>{\centering\arraybackslash}m{#1}}
+
+%Arguments are 1 - height, 2 - box title
+\newtcolorbox{textanswerbox}[2]{%
+ width=\textwidth,colback=white,colframe=blue!30!black,floatplacement=H,height=#1,title=#2,clip lower=true,before upper={\parindent0em}}
+
+ \newtcolorbox{eqanswerbox}[1]{%
+ width=#1,colback=white,colframe=black,floatplacement=H,height=3em,sharp corners=all,clip lower=true,before upper={\parindent0em}}
+
+ %Arguments are 1 - height, 2 - box title
+ \NewEnviron{answertext}[2]{
+        \noindent
+        \marginbox*{0pt 10pt}{
+        \clipbox{0pt 0pt 0pt 0pt}{
+        \begin{textanswerbox}{#1}{#2}
+        \BODY
+        \end{textanswerbox}
+        }
+        }
+}
+
+%Arguments are 1 - height, 2 - box title, 3 - column definition
+ \NewEnviron{answertable}[3]{
+        \noindent
+        \marginbox*{0pt 10pt}{
+        \clipbox{0pt 0pt 0pt 0pt}{
+        \begin{textanswerbox}{#1}{#2}
+                \vspace{-0.5cm}
+                        \begin{table}[H]
+                        \centering
+                        \begin{tabular}{#3}
+                                \BODY
+                        \end{tabular}
+                        \end{table}
+        \end{textanswerbox}
+        }
+        }
+}
+
+ %Arguments are 1 - height, 2 - box title, 3 - title, 4- equation label, 5 - equation box width
+ \NewEnviron{answerequation}[5]{
+        \noindent
+        \marginbox*{0pt 10pt}{
+        \clipbox{0pt 0pt 0pt 0pt}{
+        \begin{textanswerbox}{#1}{#2}
+                \vspace{-0.5cm}
+                        \begin{table}[H]
+                        \centering
+                \renewcommand{\arraystretch}{0.5}% Tighter
+
+                        \begin{tabular}{#3}
+                                #4 =  &
+                        \clipbox{0pt 0pt 0pt 0pt}{
+
+                        \begin{eqanswerbox}{#5}
+                                $\BODY$
+                        \end{eqanswerbox}
+                        } \\
+                        \end{tabular}
+                        \end{table}
+
+        \end{textanswerbox}
+        }
+        }
+}
+
+ %Arguments are 1 - height, 2 - box title
+ \NewEnviron{answerderivation}[2]{
+        \noindent
+        \marginbox*{0pt 10pt}{
+        \clipbox{0pt 0pt 0pt 0pt}{
+        \begin{textanswerbox}{#1}{#2}
+        \BODY
+        \end{textanswerbox}
+        }
+        }
+}
+
+\newcommand{\Checked}{{\LARGE \XBox}}%
+\newcommand{\Unchecked}{{\LARGE \Square}}%
+\newcommand{\TextRequired}{{\textbf{Place Answer Here}}}%
+\newcommand{\EquationRequired}{\textbf{Type Equation Here}}%
+
+
+\newcommand{\answertextheight}{5cm}
+\newcommand{\answertableheight}{4cm}
+\newcommand{\answerequationheight}{2.5cm}
+\newcommand{\answerderivationheight}{14cm}
+
+\newcounter{QuestionCounter}
+\newcounter{SubQuestionCounter}[QuestionCounter]
+\setcounter{SubQuestionCounter}{1}
+
+\newcommand{\subquestiontitle}{Question \theQuestionCounter.\theSubQuestionCounter~}
+\newcommand{\newquestion}{\stepcounter{QuestionCounter}\setcounter{SubQuestionCounter}{1}\newpage}
+\newcommand{\newsubquestion}{\stepcounter{SubQuestionCounter}}
+
+
+\lstset{language=[LaTeX]TeX,basicstyle=\ttfamily\bf}
+
+\pagestyle{myheadings}
+\markboth{Homework 2}{Spring 2020 CS 475/675 Machine Learning: Homework 2}
+
+\title{CS 475 Machine Learning: Homework 2\\
+Supervised Classifiers 2\\
+Analytical Problems \\
+\Large{Due: Sunday, March 8, 2020, 11:59 pm}\\
+50 Points Total \hspace{1cm} Version 1.1}
+\author{YOUR\_NAME (YOUR\_JHED)}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{headings}
+
+\section*{Instructions }
+We have provided this \LaTeX{} document for turning in this homework. We give you one or more boxes to answer each question.  The question to answer for each box will be noted in the title of the box.
+
+ $\newline${\bf Other than your name, do not type anything outside the boxes. Leave the rest of the document unchanged.}
+
+% For written answers, replace the \lstinline{\TextRequired} (\TextRequired) command with your answer. For the following example \textit{\subquestiontitle}, you would place your answer where \lstinline{\TextRequired} (\TextRequired) is located,
+
+% \begin{answertext}{1.5cm}{}
+% % PLACE ANSWER HERE
+% \TextRequired
+% \end{answertext}
+% \newsubquestion
+%  Do not change the height or title of the box. If your text goes beyond the box boundary, it will be cut off.  We have given sufficient space for each answer, so please condense your answer if it overflows. The height of the box is an upper bound on the amount of text required to answer the question - many answers can be answered in a fraction of the space.  Do not add text outside of the boxes. We will not read it.
+
+% For True/False or Multiple Choice questions, place your answers within the defined table.  To mark the box(es) corresponding to your answers, replace \lstinline{\Unchecked} (\Unchecked) commands with the \lstinline{\Checked} (\Checked) command. Do not make any other changes to the table. For example, in \textit{\subquestiontitle},
+
+% \begin{answertable}{2.5cm}{}{x{0.5cm}p{5cm}}
+% \Checked &  Logistic Regression \\
+% \Unchecked & Perceptron \\
+% \end{answertable}
+% \newsubquestion
+% For answers that require a single equation, we will provide a specific type of box, such as in the following example \textit{\subquestiontitle}.  Please type the equation where  \lstinline{\EquationRequired} (\EquationRequired) without adding any \$ signs or \lstinline{\equation} commands.  Do not put any additional text in this field.
+
+% \begin{answerequation}{\answerequationheight}{}{z{1cm}z{12cm}}{\textbf{w}}{12cm}
+% \EquationRequired
+% \end{answerequation}
+% \newsubquestion
+% For answers that require multiple equations, such as a derivation, place all equations within the specified box.   You may include text short explanations if you wish (as shown in \textit{\subquestiontitle}).  You can put the equations in any format you like (e.g. within \$ or \$\$, the \lstinline{\equation} environment, the \lstinline{\align} environment) as long as they stay within the box.
+
+% \begin{answerderivation}{6cm}{}
+% \begin{align*}
+% x + 2  && \text{x is a real number} \\
+% &&\text{the following equation uses the variable } y \\
+% y+3
+% \end{align*}
+% \end{answerderivation}
+% \newsubquestion
+
+
+$\newline$\textbf{Do not change any formatting in this document, or we may be unable to
+  grade your work. This includes, but is not limited to, the height of
+  textboxes, font sizes, and the spacing of text and tables.  Additionally, do
+  not add text outside of the answer boxes. Entering your answers are the only
+  changes allowed.}
+
+
+$\newline$\textbf{We strongly recommend you review your answers in the generated PDF to
+  ensure they appear correct. We will grade what appears in the answer boxes in
+  the submitted PDF, NOT the original latex file.}
+
+\pagebreak
+
+% \newquestion
+\section*{ Notation}
+{
+\begin{table}[h]
+% \caption{Notation.}\smallskip
+\centering
+\resizebox{.95\columnwidth}{!}{
+\smallskip\begin{tabular}{r l}
+\(\vec{x_i}\) & One input data vector. \(\vec{x_i}\) is \(M\) dimensional.
+                  \(\vec{x_i} \in \mathbb{R}^{1 \times M}\).  \\ &
+                  We assume $\vec{x_i}$ is augmented with a  $1$ to include a bias term. \\ \\
+\(\vec{X}\) &   A matrix of concatenated \(\vec{x_i}\)'s. There are \(N\) input vectors, so \(\vec{X} \in \mathbb{R}^{N \times M}\) \\ \\
+\(y_i\) & The true label for input vector \(\vec{x_i}\). In regression problems, \(y_i\) is a continuous value. \\ & In general \(y_i\) can be a vector, but for now we assume \(y_i\) is a scalar. \(y_i \in \mathbb{R}^1\). \\ \\
+
+\(\vec{y}\) &   A vector of concatenated \(y_i\)'s. There are \(N\) input vectors, so \(\vec{y} \in \mathbb{R}^{N \times 1}\) \\ \\
+
+\(\vec{w}\) & A weight vector. We are trying to learn the elements of \(\vec{w}\). \\ & \(\vec{w}\) is the same number of elements as \(\vec{x_i}\) because we will end up computing the dot product \(\vec{x_i} \cdot \vec{w}\). \\ & \(\vec{w} \in \mathbb{R}^{M \times 1}\). We assume the bias term is included in \(\vec{w}\). \\ \\
+ 
+% \(E_D(\vec{w})\) & The loss due to the model fit. \\ \\
+% \(E_\vec{w}(\vec{w})\) & The regularization term.  \\ \\
+
+ Notes: & In general, a lowercase letter (not boldface), $a$, indicates a scalar. \\
+  & A boldface lowercase letter, $\vec{a}$, indicates a vector. \\  &  A boldface uppercase letter, $\vec{A}$, indicates a matrix. \\
+\end{tabular}
+}
+\label{table2}
+\end{table}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newquestion
+\section*{\arabic{QuestionCounter}) Decision Trees (10 points)} {
+Consider the classification task where you want to predict $y$ given $\mathbf{x} = [x_1, x_2,
+x_3, x_4, x_5]$.
+\begin{center}
+\begin{tabular}{ ccccc|c }
+ $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $y$ \\\cline{1-5}
+ \hline
+ 1 & 0 & 0 & 0 & 1 & 1 \\
+ 1 & 0 & 1 & 0 & 1 & 1 \\
+ 0 & 1 & 0 & 1 & 1 & 1 \\
+ 0 & 0 & 0 & 1 & 1 & 0 \\
+ 1 & 1 & 1 & 0 & 1 & 0 \\
+ 1 & 0 & 1 & 1 & 1 & 0 \\
+ 1 & 0 & 0 & 1 & 1 & 0 \\
+ 0 & 1 & 0 & 0 & 1 & 0 \\
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[{(1)}]
+
+\item (4 points) Construct a decision tree based on the above training examples
+  following the algorithm we specified in class using the information gain
+  criterion and a maximum depth of 2.  As an additional base case, stop
+  expanding if all training examples have the same label. You may use each
+  feature at most once along any path from the root to a leaf.
+
+  Using the decision tree schematic below, specify the correct feature number
+  for internal nodes A, B, and C.  For each nodes D, E, F, and G, specify the
+  correct label.  Put answers in the pre-formatted table by the ``?''  with the
+  correct feature or label.
+
+
+\parbox{9.25cm}{
+    \includegraphics[width=90mm]{plot.png}
+}
+\begin{minipage}{5.5cm}
+\begin{answertable}{6.5cm}{}{rc}
+\text{Node} & Id or label  \\ \hline
+A= & ? \\
+B= & ? \\
+C= & ? \\
+D= & ? \\
+E= & ? \\
+F= & ? \\
+G= & ? \\
+\end{answertable}
+\end{minipage}
+
+\newpage
+\item (2 points) Apply the decision tree learned in part 1 of this question to
+  classify the following new data points.  Replace the ``?'' in the table below
+  with the classifier's prediction.
+
+\begin{answertable}{3.5cm}{}{ccccc|c}
+$x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $y$ \\ \hline
+0 & 1 & 1 & 1 & 1 & ? \\
+1 & 1 & 0 & 1 & 1 & ? \\
+1 & 1 & 0 & 0 & 1 & ? \\
+\end{answertable}
+
+
+\item (4 points) For the training dataset in part 1, can any of the methods
+  listed in the table below obtain a \emph{training accuracy} of 100\% using
+  only the features given?  Answer below by replacing the ``?'' with ``Y'' or
+  ``N''.
+
+\begin{answertable}{7cm}{}{l|c}
+Method & $Y/N$ \\ \hline
+Decision tree of depth 1 & ? \\
+Decision tree of unlimited depth & ? \\
+Linear Kernel SVM & ? \\
+Quadratic Kernel SVM & ? \\
+\textsc{AdaBoost} with decision stumps & ? \\
+\end{answertable}
+
+
+\end{enumerate}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newquestion
+\section*{\arabic{QuestionCounter}) Hinge Loss (10 points)}
+
+Linear SVMs using a squared hinge loss can also be formulated as an unconstrained optimization problem:
+\begin{align}
+\vw^{\star} = \argmin_{\vw} \left[ \lambda \lVert \vw \rVert^2 + \sum_{i=1}^N H(y_i \vw^T \vxi) \right],
+\end{align}
+where $\lambda$ is the regularization parameter and $H(a) = \max(0, 1-a)^2$ is the squared hinge loss function. The hinge loss function can be viewed as a convex surrogate of the 0/1 loss function $\mathbbm{1}(a \leq 0)$.
+\begin{enumerate}[(a)]
+
+\item (3 points) Compared with the standard hinge loss function, what do you think are the advantages and disadvantages of the square hinge loss function?
+
+\begin{answertext}{8cm}{}
+    
+\end{answertext} 
+
+\item (3 points) The function $G(a) = \max(-a,0)^2$ can also approximate the 0/1 loss function. What is the disadvantage of using this function instead?
+
+\begin{answertext}{7cm}{}
+    
+\end{answertext} 
+
+\item (4 points) We can choose a different loss function $H'(a) = \max(0.5-a,0)^2$. Specifically, the new objective becomes:
+\begin{align}
+\vw'^{\star} = \argmin_{\vw} \left[ \lambda' \lVert \vw \rVert^2 + \sum_{i=1}^N H'(y_i \vw^T \vxi)) \right].
+\end{align}
+ In the situation that the classification doesn't change, consider how switching to $H'$ from $H$ will effect the solution of the objective function. Explain your answer in terms of the relationship between $\lambda$ and $\lambda'$. 
+\end{enumerate}
+
+\begin{answertext}{8cm}{}
+    
+\end{answertext} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newquestion
+\section*{\arabic{QuestionCounter}) Kernel Trick (10 points)}
+The kernel trick extends SVMs to learn nonlinear functions. However, an improper use of a kernel function can cause serious over-fitting. Consider the following kernels.
+\begin{enumerate}[(a)]
+\item (3 points) Inverse Polynomial kernel: given $\|x\|_2\leq 1$ and $\|x'\|_2\leq 1$, we define $K(x, x') = 1/(d-x^\top x')$, where $d\geq 2$. Does increasing $d$ make over-fitting more or less likely?
+
+\begin{answertext}{8cm}{}
+    
+\end{answertext} 
+\item (4 points) Chi squared kernel: Let $x_j$ denote the $j$-th entry of $x$. Given $x_j>0$ and $x_j'>0$ for all $j$, we define $K(x, x') = \exp\left(-\sigma\sum_j\frac{(x_j-x'_j)^2}{x_j+x'_j}\right)$, where $\sigma>0$. Does increasing $\sigma$ make over-fitting more or less likely?
+
+\begin{answertext}{8cm}{}
+    
+\end{answertext} 
+
+\end{enumerate}
+
+$\newline$We say $K$ is a kernel function, if there exists some transformation $\phi:\mathbb{R}^m\rightarrow \mathbb{R}^{m'}$ such that $K(x_i,x_{i'}) = \left<\phi(x_i),\phi(x_{i'})\right>$.
+\begin{enumerate}[(c)]
+\item (3 points) Let $K_1$ and $K_2$ be two kernel functions. Prove that $K(x_i,x_{i'}) = K_1(x_i,x_{i'}) + K_2(x_i,x_{i'})$ is also a kernel function.
+\end{enumerate}
+
+\begin{answertext}{12cm}{}
+    
+\end{answertext} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newquestion
+\section*{\arabic{QuestionCounter}) Dual Perceptron (10 points)} 
+\begin{enumerate}[(a)]
+\item (3 points) You train a Perceptron classifier in the primal form on an infinite stream of data. This stream of data is not-linearly separable. Will the Perceptron have a bounded number of prediction errors?
+
+\begin{answertext}{5cm}{}
+    
+\end{answertext} 
+
+\item (4 points) Switch the primal Perceptron in the previous step to a dual Perceptron with a linear kernel. After observing $T$ examples in the stream, will the two Perceptrons have learned the same prediction function?
+
+\begin{answertext}{5cm}{}
+    
+\end{answertext} 
+
+\item (3 points) What computational issue will you encounter if you continue to run the dual Perceptron and allow $T$ to approach $\infty$? Will this problem happen with the primal Percepton? Why or why not?
+
+\begin{answertext}{5.5cm}{}
+    
+\end{answertext} 
+
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newquestion
+\section*{\arabic{QuestionCounter}) Linear SVM (10 points)} 
+Suppose we are given the four data points in $\mathbb{R}^2$: $\left[ (3,1), (3,-1), (4,2), (4,-2)\right ]$ labeled as positive and four data points in $\mathbb{R}^2$: $\left[ (1,0), (0,2), (2,0), -1,2)\right ]$ labeled as negative. The goal is to build an SVM classifier. 
+\begin{enumerate}[(a)]
+\item (3 points) What are the support vectors for this classifier.
+
+\begin{answertext}{6cm}{}
+    
+\end{answertext} 
+\newpage
+\item (4 points) Write out the optimization problem in dual formulation (include only the support vectors). And solve the problem.
+
+\begin{answertext}{22cm}{}
+    
+\end{answertext} 
+\item (3 points) Derive the hyperplane for classification. Hint: You can solve for $b$ using the following equation: $$b^*=-\frac{\max_{i:y^{(i)}=-1}w^{*T}x^{(i)}+\min_{i:y^{(i)}=1}w^{*T}x^{(i)}}{2}$$
+
+\begin{answertext}{16cm}{}
+    
+\end{answertext} 
+\end{enumerate}
+
+\end{document}
